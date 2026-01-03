@@ -1,290 +1,164 @@
-name: GitAntivirus Safe Scan
+name: Git Antivirus Scanner
 
 on:
+  push:
+    branches: [ main, develop ]
   pull_request:
-    types: [opened, synchronize, reopened]
+    branches: [ main, develop ]
+  schedule:
+    # Run daily at 2 AM UTC
+    - cron: '0 2 * * *'
   workflow_dispatch:
-    inputs:
-      dry_run:
-        description: 'Run in dry-run mode (recommended)'
-        required: false
-        default: 'true'
-        type: choice
-        options:
-          - 'true'
-          - 'false'
-
-# Conservative permissions - read-only by default with write only where needed
-permissions:
-  contents: write
-  pull-requests: write
-  issues: write
-
-env:
-  # SECURITY: Safe defaults - non-destructive by default
-  DRY_RUN: 'true'
-  BOT_PINGS_ENABLED: 'false'
-  ALLOWLIST_ORGS: ''
-  MAX_PRS_PER_RUN: 3
 
 jobs:
-  gitantivirus-scan:
-    name: GitAntivirus Security Scan (Dry-Run)
+  scan:
     runs-on: ubuntu-latest
     
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
         with:
-          fetch-depth: 0  # Full history for comprehensive scanning
-      
-      - name: Setup Node.js
-        uses: actions/setup-node@v4
+          fetch-depth: 0
+          
+      - name: Set up Python
+        uses: actions/setup-python@v4
         with:
-          node-version: '20'
-      
-      - name: Setup pnpm
-        uses: pnpm/action-setup@v4
-        with:
-          version: 8
-      
+          python-version: '3.11'
+          
       - name: Install dependencies
         run: |
-          if [ -f package.json ]; then
-            pnpm install --frozen-lockfile || npm install
-          fi
-        continue-on-error: true
-      
-      - name: Make scripts executable
+          python -m pip install --upgrade pip
+          pip install yara-python requests
+          
+      - name: Download YARA rules
         run: |
-          if [ -d scripts ]; then
-            chmod +x scripts/*.sh || true
-          fi
-      
-      - name: Run GitAntivirus scan (Dry-Run)
+          mkdir -p yara-rules
+          # Download malware detection rules
+          curl -L https://raw.githubusercontent.com/Yara-Rules/rules/master/malware/MALW_Eicar.yar -o yara-rules/malware.yar
+          curl -L https://raw.githubusercontent.com/Yara-Rules/rules/master/crypto/crypto_signatures.yar -o yara-rules/crypto.yar
+          
+      - name: Scan repository
         id: scan
         run: |
-          echo "🔍 Running GitAntivirus in DRY-RUN mode..."
-          echo "⚠️  No changes will be made to the repository"
-          echo ""
+          cat > scan.py << 'EOF'
+          import yara
+          import os
+          import sys
+          import json
+          from pathlib import Path
           
-          # Run scan in dry-run mode
-          if [ -f scripts/master.sh ]; then
-            DRY_RUN=true ./scripts/master.sh scan || true
-          else
-            echo "ℹ️  Master script not found, running basic audit..."
-            if [ -f scripts/audit.sh ]; then
-              DRY_RUN=true ./scripts/audit.sh || true
-            else
-              echo "⚠️  No audit scripts found"
-            fi
-          fi
+          def scan_file(filepath, rules):
+              """Scan a single file with YARA rules"""
+              try:
+                  matches = rules.match(filepath)
+                  return matches
+              except Exception as e:
+                  print(f"Error scanning {filepath}: {e}")
+                  return []
           
-          echo "✅ Dry-run scan complete"
-        continue-on-error: true
-        env:
-          DRY_RUN: ${{ github.event.inputs.dry_run || 'true' }}
-          BOT_PINGS_ENABLED: 'false'
-          ALLOWLIST_ORGS: ''
-      
-      - name: Run health checks (Dry-Run)
-        run: |
-          echo "🏥 Running health checks in dry-run mode..."
+          def scan_directory(directory, rules):
+              """Recursively scan directory"""
+              results = []
+              excluded_dirs = {'.git', 'node_modules', '__pycache__', '.venv', 'venv'}
+              
+              for root, dirs, files in os.walk(directory):
+                  # Remove excluded directories
+                  dirs[:] = [d for d in dirs if d not in excluded_dirs]
+                  
+                  for file in files:
+                      filepath = os.path.join(root, file)
+                      matches = scan_file(filepath, rules)
+                      if matches:
+                          results.append({
+                              'file': filepath,
+                              'matches': [str(m) for m in matches]
+                          })
+              
+              return results
           
-          # Check for common issues
-          echo "Checking for secrets..."
-          if command -v git-secrets &> /dev/null; then
-            git secrets --scan || echo "⚠️  git-secrets not configured"
-          fi
+          def main():
+              # Load YARA rules
+              rule_files = []
+              yara_dir = 'yara-rules'
+              
+              if os.path.exists(yara_dir):
+                  for rule_file in Path(yara_dir).glob('*.yar'):
+                      rule_files.append(str(rule_file))
+              
+              if not rule_files:
+                  print("No YARA rules found")
+                  sys.exit(1)
+              
+              # Compile rules
+              rules_dict = {}
+              for i, rule_file in enumerate(rule_files):
+                  rules_dict[f'rule_{i}'] = rule_file
+              
+              try:
+                  rules = yara.compile(filepaths=rules_dict)
+              except Exception as e:
+                  print(f"Error compiling rules: {e}")
+                  sys.exit(1)
+              
+              # Scan repository
+              print("Starting repository scan...")
+              results = scan_directory('.', rules)
+              
+              # Output results
+              if results:
+                  print("\n⚠️  THREATS DETECTED ⚠️\n")
+                  for result in results:
+                      print(f"File: {result['file']}")
+                      print(f"Matches: {', '.join(result['matches'])}")
+                      print("-" * 50)
+                  
+                  # Save results to file
+                  with open('scan-results.json', 'w') as f:
+                      json.dump(results, f, indent=2)
+                  
+                  sys.exit(1)
+              else:
+                  print("✅ No threats detected")
+                  sys.exit(0)
           
-          # Check for large files
-          echo "Checking for large files..."
-          find . -type f -size +10M -not -path "./.git/*" | head -10 || true
-          
-          # Basic security checks
-          echo "Running basic security checks..."
-          if [ -f package.json ]; then
-            npm audit --audit-level=moderate || true
-          fi
-          
-          echo "✅ Health checks complete (dry-run)"
-        continue-on-error: true
-      
-      - name: Generate scan report
-        if: always()
-        run: |
-          echo "📝 Generating scan report..."
-          
-          # Create report file
-          cat > AUDIT-REPORT.md << 'EOF'
-          # GitAntivirus Scan Report
-          
-          **Date**: $(date -u +"%Y-%m-%d %H:%M:%S UTC")
-          **Mode**: DRY-RUN (No changes made)
-          **Workflow**: ${{ github.workflow }}
-          **Run ID**: ${{ github.run_id }}
-          
-          ## Summary
-          
-          This scan ran in **DRY-RUN mode**. No actual changes were made to the repository.
-          
-          ### Safety Configuration
-          
-          - ✅ DRY_RUN: enabled
-          - ✅ BOT_PINGS_ENABLED: disabled
-          - ✅ ALLOWLIST_ORGS: empty (restrictive)
-          - ✅ MAX_PRS_PER_RUN: 3 (rate-limited)
-          
-          ### Scan Results
-          
-          Please review the workflow logs for detailed scan output.
-          
-          ## Next Steps
-          
-          To enable actual fixes (NOT RECOMMENDED without review):
-          1. Review this report carefully
-          2. Verify all findings
-          3. Set DRY_RUN=false (only if necessary)
-          4. Provide GitHub token with write permissions
-          
-          ## Security Notes
-          
-          ⚠️  **IMPORTANT**: This workflow runs in safe mode by default.
-          - No automatic fixes applied
-          - No automatic PRs created
-          - No automatic merges
-          - Manual review required for all actions
-          
-          ## Support
-          
-          For questions or issues, please open a GitHub issue or contact security@cuberai.example
-          
-          ---
-          *Generated by GitAntivirus Safe Scan Workflow*
+          if __name__ == '__main__':
+              main()
           EOF
           
-          echo "✅ Report generated"
-      
-      - name: Upload scan artifacts
+          python scan.py
+        continue-on-error: true
+        
+      - name: Upload scan results
         if: always()
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
-          name: gitantivirus-scan-results
-          path: |
-            AUDIT-REPORT.md
-            SMARTBRAIN.log
-            .quarantine/
+          name: scan-results
+          path: scan-results.json
           if-no-files-found: ignore
-          retention-days: 90
-      
-      - name: Add labels to PR (if applicable)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
+          
+      - name: Comment on PR
+        if: failure() && github.event_name == 'pull_request'
         uses: actions/github-script@v7
         with:
           script: |
+            const fs = require('fs');
+            let comment = '## ⚠️ Security Scan Results\n\n';
+            
             try {
-              await github.rest.issues.addLabels({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                labels: ['security-scan', 'dry-run']
-              });
-            } catch (error) {
-              console.log('Could not add labels:', error.message);
+              const results = JSON.parse(fs.readFileSync('scan-results.json', 'utf8'));
+              comment += 'Potential threats detected:\n\n';
+              
+              for (const result of results) {
+                comment += `- **${result.file}**\n`;
+                comment += `  - Matches: ${result.matches.join(', ')}\n\n`;
+              }
+            } catch (e) {
+              comment += 'Scan completed with issues. Check the workflow logs for details.\n';
             }
-      
-      - name: Post PR comment (Dry-Run Notice)
-        if: github.event_name == 'pull_request'
-        continue-on-error: true
-        uses: actions/github-script@v7
-        with:
-          script: |
-            const comment = `## 🔍 GitAntivirus Scan Complete (Dry-Run)
             
-            **Status**: ✅ Scan completed in safe dry-run mode
-            **Mode**: DRY-RUN (no changes made)
-            **Date**: ${new Date().toUTCString()}
-            
-            ### Safety Configuration
-            
-            - ✅ **DRY_RUN**: Enabled (no actual changes)
-            - ✅ **BOT_PINGS**: Disabled (quiet mode)
-            - ✅ **ALLOWLIST**: Empty (restrictive)
-            - ✅ **RATE_LIMIT**: 3 PRs max per run
-            
-            ### What This Means
-            
-            This security scan ran in **safe mode** and made **no changes** to your code or repository.
-            It only analyzed the code for potential issues.
-            
-            ### Next Steps
-            
-            1. ✅ Review the scan artifacts (attached to workflow run)
-            2. ✅ Check AUDIT-REPORT.md for findings
-            3. ✅ Address any security concerns manually
-            4. ⚠️  Do NOT disable dry-run without review
-            
-            ### Security Notes
-            
-            This workflow follows conservative security practices:
-            - Non-destructive by default
-            - Requires manual approval for any fixes
-            - No automatic merges or commits
-            - Comprehensive logging and auditing
-            
-            ---
-            
-            *This is a sticky comment and will be updated on subsequent scans.*
-            *For questions, see [SECURITY.md](../SECURITY.md) or contact security@cuberai.example*
-            `;
-            
-            // Try to find existing comment
-            const { data: comments } = await github.rest.issues.listComments({
+            github.rest.issues.createComment({
+              issue_number: context.issue.number,
               owner: context.repo.owner,
               repo: context.repo.repo,
-              issue_number: context.issue.number
+              body: comment
             });
-            
-            const botComment = comments.find(c => 
-              c.user.type === 'Bot' && c.body.includes('GitAntivirus Scan Complete')
-            );
-            
-            if (botComment) {
-              // Update existing comment
-              await github.rest.issues.updateComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                comment_id: botComment.id,
-                body: comment
-              });
-            } else {
-              // Create new comment
-              await github.rest.issues.createComment({
-                owner: context.repo.owner,
-                repo: context.repo.repo,
-                issue_number: context.issue.number,
-                body: comment
-              });
-            }
-      
-      - name: Summary
-        if: always()
-        run: |
-          echo "## 🔍 GitAntivirus Scan Summary" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "**Mode**: DRY-RUN (Safe Mode)" >> $GITHUB_STEP_SUMMARY
-          echo "**Status**: Completed" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Safety Checks" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Dry-run mode enabled" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ No changes made to repository" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Bot pings disabled" >> $GITHUB_STEP_SUMMARY
-          echo "- ✅ Conservative allowlist" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Artifacts" >> $GITHUB_STEP_SUMMARY
-          echo "Scan results uploaded as workflow artifacts (90-day retention)" >> $GITHUB_STEP_SUMMARY
-          echo "" >> $GITHUB_STEP_SUMMARY
-          echo "### Security Notice" >> $GITHUB_STEP_SUMMARY
-          echo "This workflow runs in safe mode by default. No automatic fixes or changes are applied." >> $GITHUB_STEP_SUMMARY
-          echo "All findings require manual review and action." >> $GITHUB_STEP_SUMMARY
