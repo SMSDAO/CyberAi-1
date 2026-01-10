@@ -1,0 +1,36 @@
+documentation:
+  - docs/**/*
+  - '**/*.md'
+  - LICENSE
+  - CONTRIBUTING.md
+
+workflows:
+  - .github/workflows/**/*
+  - .github/**/*.yml
+
+frontend:
+  - app/**/*
+  - dashboard/**/*
+  - '**/*.html'
+  - '**/*.css'
+
+backend:
+  - api/**/*
+  - src/**/*
+
+security:
+  - .github/workflows/codeql.yml
+  - security/**/*
+
+dependencies:
+  - package.json
+  - package-lock.json
+  - requirements.txt
+  - Gemfile
+  - Cargo.toml
+
+tests:
+  - test/**/*
+  - tests/**/*
+  - '**/*.test.js'
+  - '**/*.spec.js'
