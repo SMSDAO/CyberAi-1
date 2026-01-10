@@ -1,10 +1,10 @@
+import OpenAI from "openai";
 import fs from "fs";
 import path from "path";
-import { Configuration, OpenAIApi } from "openai";
 
-const openai = new OpenAIApi(
-  new Configuration({ apiKey: process.env.OPENAI_API_KEY })
-);
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 const DOCS_DIR = path.resolve(__dirname, "../docs");
 
@@ -18,7 +18,11 @@ function findConflictedFiles(dir: string): string[] {
       files.push(...findConflictedFiles(fullPath));
     } else if (entry.isFile()) {
       const content = fs.readFileSync(fullPath, "utf8");
-      if (content.includes("<<<<<<<") && content.includes("=======") && content.includes(">>>>>>>")) {
+      if (
+        content.includes("<<<<<<<") &&
+        content.includes("=======") &&
+        content.includes(">>>>>>>")
+      ) {
         files.push(fullPath);
       }
     }
@@ -41,14 +45,17 @@ ${content}
 Resolved version:
 `;
 
-  const response = await openai.createCompletion({
+  const response = await openai.chat.completions.create({
     model: "gpt-4",
-    prompt,
+    messages: [
+      { role: "system", content: "You are SmartBrain, an AI conflict resolver." },
+      { role: "user", content: prompt }
+    ],
     temperature: 0.2,
-    max_tokens: 2048
+    max_tokens: 2048,
   });
 
-  const resolved = response.data.choices[0].text?.trim();
+  const resolved = response.choices[0]?.message?.content?.trim();
   if (resolved) {
     fs.writeFileSync(filePath, resolved, "utf8");
     console.log(`✅ Resolved: ${filePath}`);
