@@ -1,36 +1,50 @@
 documentation:
-  - docs/**/*
-  - '**/*.md'
-  - LICENSE
-  - CONTRIBUTING.md
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'docs/**/*'
+      - '**/*.md'
+      - 'LICENSE'
+      - 'CONTRIBUTING.md'
 
 workflows:
-  - .github/workflows/**/*
-  - .github/**/*.yml
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/workflows/**/*'
+      - '.github/**/*.yml'
 
 frontend:
-  - app/**/*
-  - dashboard/**/*
-  - '**/*.html'
-  - '**/*.css'
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'app/**/*'
+      - 'dashboard/**/*'
+      - '**/*.html'
+      - '**/*.css'
 
 backend:
-  - api/**/*
-  - src/**/*
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'api/**/*'
+      - 'src/**/*'
 
 security:
-  - .github/workflows/codeql.yml
-  - security/**/*
+  - changed-files:
+    - any-glob-to-any-file:
+      - '.github/workflows/codeql.yml'
+      - 'security/**/*'
 
 dependencies:
-  - package.json
-  - package-lock.json
-  - requirements.txt
-  - Gemfile
-  - Cargo.toml
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'package.json'
+      - 'package-lock.json'
+      - 'requirements.txt'
+      - 'Gemfile'
+      - 'Cargo.toml'
 
 tests:
-  - test/**/*
-  - tests/**/*
-  - '**/*.test.js'
-  - '**/*.spec.js'
+  - changed-files:
+    - any-glob-to-any-file:
+      - 'test/**/*'
+      - 'tests/**/*'
+      - '**/*.test.js'
+      - '**/*.spec.js'
