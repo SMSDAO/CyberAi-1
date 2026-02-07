@@ -1,1 +1,391 @@
-<html><body><h1>docs.cyberai.network</h1></body></html>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="CyberAi Documentation - AI-Powered Smart Contract Security & Orchestration Platform">
+    <title>CyberAi Documentation</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+            line-height: 1.6;
+            color: #24292e;
+            background: #f6f8fa;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        
+        header {
+            background: linear-gradient(135deg, #0d1117 0%, #161b22 100%);
+            color: #ffffff;
+            padding: 60px 20px;
+            text-align: center;
+            margin-bottom: 40px;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            font-weight: 700;
+        }
+        
+        header p {
+            font-size: 1.3em;
+            color: #8b949e;
+            margin-bottom: 30px;
+        }
+        
+        .quick-links {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 12px 24px;
+            background: #238636;
+            color: white;
+            text-decoration: none;
+            border-radius: 6px;
+            font-weight: 600;
+            transition: background 0.3s;
+        }
+        
+        .btn:hover {
+            background: #2ea043;
+        }
+        
+        .btn-secondary {
+            background: #21262d;
+        }
+        
+        .btn-secondary:hover {
+            background: #30363d;
+        }
+        
+        .section {
+            background: white;
+            padding: 30px;
+            margin-bottom: 30px;
+            border-radius: 8px;
+            box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+        }
+        
+        .section h2 {
+            color: #0d1117;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #d0d7de;
+            font-size: 1.8em;
+        }
+        
+        .doc-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 20px;
+            margin-top: 20px;
+        }
+        
+        .doc-card {
+            border: 1px solid #d0d7de;
+            border-radius: 6px;
+            padding: 20px;
+            transition: all 0.3s;
+        }
+        
+        .doc-card:hover {
+            border-color: #0969da;
+            box-shadow: 0 3px 10px rgba(0,0,0,0.1);
+            transform: translateY(-2px);
+        }
+        
+        .doc-card h3 {
+            color: #0969da;
+            margin-bottom: 10px;
+            font-size: 1.3em;
+        }
+        
+        .doc-card p {
+            color: #57606a;
+            margin-bottom: 15px;
+        }
+        
+        .doc-card a {
+            color: #0969da;
+            text-decoration: none;
+            font-weight: 600;
+        }
+        
+        .doc-card a:hover {
+            text-decoration: underline;
+        }
+        
+        .icon {
+            font-size: 2em;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 20px;
+            color: #57606a;
+            margin-top: 40px;
+        }
+        
+        footer a {
+            color: #0969da;
+            text-decoration: none;
+        }
+        
+        footer a:hover {
+            text-decoration: underline;
+        }
+        
+        .features {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 20px;
+            margin: 30px 0;
+        }
+        
+        .feature {
+            text-align: center;
+            padding: 20px;
+        }
+        
+        .feature-icon {
+            font-size: 3em;
+            margin-bottom: 10px;
+        }
+        
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+            
+            .doc-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <div class="container">
+            <h1>🧠 CyberAi Documentation</h1>
+            <p>AI-Powered Smart Contract Security & Orchestration Platform</p>
+            <div class="quick-links">
+                <a href="GETTING_STARTED.md" class="btn">Get Started</a>
+                <a href="README.md" class="btn btn-secondary">Full Documentation</a>
+                <a href="https://github.com/SMSDAO/CyberAi-1" class="btn btn-secondary">GitHub</a>
+            </div>
+        </div>
+    </header>
+
+    <div class="container">
+        <!-- Features -->
+        <div class="section">
+            <h2>Why CyberAi?</h2>
+            <div class="features">
+                <div class="feature">
+                    <div class="feature-icon">🔒</div>
+                    <h3>Smart Security</h3>
+                    <p>Automated security audits and vulnerability detection</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">🧠</div>
+                    <h3>AI-Powered</h3>
+                    <p>SmartBrain orchestrates multiple specialized agents</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">📱</div>
+                    <h3>Mobile-First</h3>
+                    <p>Control repos from your phone with terminal commands</p>
+                </div>
+                <div class="feature">
+                    <div class="feature-icon">⚡</div>
+                    <h3>Gas Optimization</h3>
+                    <p>Reduce smart contract gas costs automatically</p>
+                </div>
+            </div>
+        </div>
+
+        <!-- Getting Started -->
+        <div class="section">
+            <h2>🚀 Getting Started</h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="icon">📖</div>
+                    <h3>Quick Start Guide</h3>
+                    <p>Get up and running in 5 minutes with our beginner-friendly guide.</p>
+                    <a href="GETTING_STARTED.md">Start Here →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">⚙️</div>
+                    <h3>Installation & Setup</h3>
+                    <p>Comprehensive installation guide with configuration options.</p>
+                    <a href="cuberai-setup.md">Setup Guide →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">🏗️</div>
+                    <h3>Architecture Overview</h3>
+                    <p>Understand the system architecture and component interactions.</p>
+                    <a href="audit/CYBERAI_ARCHITECTURE.md">Learn More →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Core Components -->
+        <div class="section">
+            <h2>🔧 Core Components</h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="icon">🧠</div>
+                    <h3>SmartBrain Engine</h3>
+                    <p>Multi-agent orchestration system for intelligent automation.</p>
+                    <a href="smartbrain/COMPARISON.md">Feature Comparison →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">📱</div>
+                    <h3>Terminal Interface</h3>
+                    <p>GitHub mobile terminal for PR management via commands.</p>
+                    <a href="terminal/index.md">Terminal Docs →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">🔌</div>
+                    <h3>API Reference</h3>
+                    <p>Programmatic access to CyberAi platform features.</p>
+                    <a href="../api/README.md">API Docs →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">📊</div>
+                    <h3>Dashboard</h3>
+                    <p>Web-based monitoring and management interface.</p>
+                    <a href="../dashboard/README.md">Dashboard Info →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Governance & Community -->
+        <div class="section">
+            <h2>🏛️ DAO & Governance</h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="icon">🏛️</div>
+                    <h3>DAO Overview</h3>
+                    <p>Community governance and contributor rewards system.</p>
+                    <a href="dao/README.md">Learn About DAO →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">✅</div>
+                    <h3>Eligibility</h3>
+                    <p>Find out who can participate in the DAO.</p>
+                    <a href="dao/eligibility.md">Check Eligibility →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">📊</div>
+                    <h3>Scoring System</h3>
+                    <p>How contributions are valued and scored.</p>
+                    <a href="dao/scoring.md">Scoring Guide →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">🎁</div>
+                    <h3>Claiming Tokens</h3>
+                    <p>How to claim your governance tokens.</p>
+                    <a href="dao/claiming.md">Claim Guide →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Partners & Community -->
+        <div class="section">
+            <h2>🤝 Partners & Community</h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="icon">🤝</div>
+                    <h3>Partner Program</h3>
+                    <p>Collaborate with CyberAi ecosystem partners.</p>
+                    <a href="partners/README.md">Join Program →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">💎</div>
+                    <h3>Sponsorship Tiers</h3>
+                    <p>Support the project with financial contributions.</p>
+                    <a href="partners/sponsorship_tiers.md">View Tiers →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">🔧</div>
+                    <h3>Technical Onboarding</h3>
+                    <p>Integration guide for partners and developers.</p>
+                    <a href="partners/technical_onboarding.md">Get Started →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">📧</div>
+                    <h3>Contact Us</h3>
+                    <p>Get in touch with the CyberAi team.</p>
+                    <a href="partners/contact.md">Contact Info →</a>
+                </div>
+            </div>
+        </div>
+
+        <!-- Resources -->
+        <div class="section">
+            <h2>📚 Additional Resources</h2>
+            <div class="doc-grid">
+                <div class="doc-card">
+                    <div class="icon">🤝</div>
+                    <h3>Contributing</h3>
+                    <p>Guidelines for contributing to the project.</p>
+                    <a href="../CONTRIBUTING.md">Contribute →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">🔒</div>
+                    <h3>Security</h3>
+                    <p>Security policy and vulnerability reporting.</p>
+                    <a href="../SECURITY.md">Security Info →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">📜</div>
+                    <h3>License</h3>
+                    <p>Apache 2.0 License information.</p>
+                    <a href="../LICENSE">View License →</a>
+                </div>
+                <div class="doc-card">
+                    <div class="icon">📦</div>
+                    <h3>Release Process</h3>
+                    <p>How we manage releases and versioning.</p>
+                    <a href="release-process.md">Release Guide →</a>
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <div class="container">
+            <p><strong>CyberAi</strong> — AI-Powered Smart Contract Security</p>
+            <p>
+                <a href="https://github.com/SMSDAO/CyberAi-1">GitHub</a> •
+                <a href="README.md">Documentation</a> •
+                <a href="partners/contact.md">Contact</a> •
+                <a href="../LICENSE">License</a>
+            </p>
+            <p style="margin-top: 20px; color: #8b949e;">
+                © 2026 CyberAi. All rights reserved. | Powered by SmartBrain
+            </p>
+        </div>
+    </footer>
+</body>
+</html>
