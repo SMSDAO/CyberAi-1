@@ -157,9 +157,11 @@ CyberAi-1/
 
 ### Placeholders
 Throughout the documentation, you may see placeholder values:
-- **Email addresses**: `*@cuberai.example` (replace with actual domain when deployed)
-- **Domains**: Some references to future deployment domains
-- **TBD/TODO**: Items marked for future completion
+- **Email addresses**: `*@cyberai.example` — These use the `.example` TLD (reserved for documentation per RFC 2606). Replace with actual domain when deployed.
+- **Domains**: Some references to future deployment domains (e.g., `api.cyberai.network`)
+- **TBD/TODO**: Items marked for future completion and clearly labeled as such
+
+**Note**: All placeholder email addresses intentionally use the `.example` top-level domain, which is reserved for documentation purposes and will never resolve to real addresses. These will be replaced with actual contact information when the platform is deployed.
 
 ### Status Indicators
 - ✅ **Production Ready** - Fully implemented and tested
