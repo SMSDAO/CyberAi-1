@@ -4,8 +4,22 @@
   "description": "**CyberAi (formerly CuberAi)** - AI-Powered Smart Contract Security & Orchestration Platform",
   "type": "module",
   "main": "index.js",
+  "engines": {
+    "node": ">=24.0.0",
+    "npm": ">=10.0.0"
+  },
   "scripts": {
-    "resolve-conflicts": "tsx scripts/SmartBrainConflictResolver.mts"
+    "resolve-conflicts": "tsx scripts/SmartBrainConflictResolver.mts",
+    "validate": "npm run validate:package && npm run validate:docs && npm run validate:scripts",
+    "validate:package": "node -e \"const pkg = require('./package.json'); console.log('✅ Package valid:', pkg.name, pkg.version);\"",
+    "validate:docs": "test -d docs && echo '✅ Documentation directory exists' || (echo '❌ Missing docs/' && exit 1)",
+    "validate:scripts": "chmod +x scripts/*.sh && echo '✅ Scripts are executable'",
+    "health": "npm run validate && echo '✅ Health check passed'",
+    "check:node": "node --version",
+    "check:env": "test -f .env.example && echo '✅ Environment template exists' || echo '⚠️ No .env.example'",
+    "docs:count": "find docs -name '*.md' 2>/dev/null | wc -l",
+    "docs:lines": "find docs -name '*.md' -exec wc -l {} + 2>/dev/null | tail -1",
+    "info": "npm run check:node && npm run check:env && npm run docs:count && npm run docs:lines"
   },
   "dependencies": {
     "openai": "^6.16.0"
@@ -14,5 +28,29 @@
     "@types/node": "^25.0.5",
     "tsx": "^4.21.0",
     "typescript": "^5.3.3"
-  }
+  },
+  "keywords": [
+    "cyberai",
+    "smart-contracts",
+    "blockchain",
+    "security",
+    "audit",
+    "ai",
+    "smartbrain",
+    "dao",
+    "ethereum",
+    "solana",
+    "defi",
+    "web3"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/SMSDAO/CyberAi-1.git"
+  },
+  "bugs": {
+    "url": "https://github.com/SMSDAO/CyberAi-1/issues"
+  },
+  "homepage": "https://github.com/SMSDAO/CyberAi-1#readme",
+  "license": "Apache-2.0",
+  "author": "CyberAi Team"
 }
