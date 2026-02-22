@@ -1,0 +1,141 @@
+<#
+  CyberAi Hard‑Coded Bootstrap Script
+  Author: Jo’s Copilot
+  Purpose:
+    - Hard-coded for CyberAi repo
+    - Cleans corrupted pnpm virtual stores
+    - Removes poisoned metadata
+    - Detects portable Node conflicts
+    - Detects dangling symlinks
+    - Reinstalls deterministically (root + site)
+    - Validates esbuild/sharp/vite/astro
+    - Launches dev server
+#>
+
+$RepoRoot = "D:\tools\repos\SolanaRemix\CyberAi"
+$SiteDir  = "$RepoRoot\site"
+
+Write-Host "`n=== CyberAi Bootstrap ===" -ForegroundColor Cyan
+
+function Info($m){ Write-Host "[INFO] $m" -ForegroundColor Gray }
+function Warn($m){ Write-Host "[WARN] $m" -ForegroundColor Yellow }
+function Err ($m){ Write-Host "[ERROR] $m" -ForegroundColor Red }
+
+# -----------------------------
+# 1. Validate tooling
+# -----------------------------
+Info "Checking Node and pnpm availability"
+
+if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
+    Err "Node not found on PATH"
+    exit 1
+}
+if (-not (Get-Command pnpm -ErrorAction SilentlyContinue)) {
+    Err "pnpm not found on PATH"
+    exit 1
+}
+
+$nodePath = (Get-Command node).Source
+if ($nodePath -match "Portable|scoop|nvm") {
+    Warn "Portable Node detected — native binaries may break"
+}
+
+# -----------------------------
+# 2. Detect corrupted pnpm metadata
+# -----------------------------
+Info "Scanning for pnpm virtual store corruption"
+
+$PathsToCheck = @(
+    "$RepoRoot\node_modules\.pnpm",
+    "$RepoRoot\node_modules\.ignored",
+    "$RepoRoot\.pnpm",
+    "$RepoRoot\.pnpm-store",
+    "$RepoRoot\pnpm-lock.yaml",
+    "$RepoRoot\node_modules",
+    "$SiteDir\node_modules"
+)
+
+foreach ($p in $PathsToCheck) {
+    if (Test-Path $p) {
+        Warn "Found: $p"
+    }
+}
+
+# -----------------------------
+# 3. Detect dangling symlinks
+# -----------------------------
+function Get-Dangling($path) {
+    if (-not (Test-Path $path)) { return @() }
+    Get-ChildItem -Recurse -Force $path |
+        Where-Object { $_.Attributes -match "ReparsePoint" } |
+        Where-Object { -not (Test-Path $_.Target) }
+}
+
+$dangRoot = Get-Dangling "$RepoRoot\node_modules"
+$dangSite = Get-Dangling "$SiteDir\node_modules"
+
+if ($dangRoot.Count -gt 0) { Warn "Dangling symlinks in root node_modules: $($dangRoot.Count)" }
+if ($dangSite.Count -gt 0) { Warn "Dangling symlinks in site node_modules: $($dangSite.Count)" }
+
+# -----------------------------
+# 4. Cleanup (hard-coded, safe)
+# -----------------------------
+Info "Removing corrupted pnpm metadata and node_modules"
+
+$RemoveTargets = @(
+    "$RepoRoot\node_modules\.pnpm",
+    "$RepoRoot\node_modules\.ignored",
+    "$RepoRoot\.pnpm",
+    "$RepoRoot\.pnpm-store",
+    "$RepoRoot\pnpm-lock.yaml",
+    "$RepoRoot\node_modules",
+    "$SiteDir\node_modules"
+)
+
+foreach ($t in $RemoveTargets) {
+    if (Test-Path $t) {
+        Info "Removing $t"
+        Remove-Item -Recurse -Force $t -ErrorAction SilentlyContinue
+    }
+}
+
+Info "Pruning global pnpm store"
+pnpm store prune | Out-Null
+
+# -----------------------------
+# 5. Reinstall (root)
+# -----------------------------
+Info "Running pnpm install at repo root"
+$rootInstall = pnpm install --dir $RepoRoot 2>&1
+
+if ($rootInstall -match "Ignored build scripts") {
+    Warn "pnpm requires approve-builds — selecting all"
+    "a`n" | pnpm approve-builds --dir $RepoRoot | Out-Null
+    pnpm install --dir $RepoRoot | Out-Null
+}
+
+# -----------------------------
+# 6. Reinstall (site)
+# -----------------------------
+Info "Installing site dependencies"
+pnpm install --dir $SiteDir | Out-Null
+
+# -----------------------------
+# 7. Validate toolchain
+# -----------------------------
+function Validate($bin, $dir) {
+    Info "Validating $bin"
+    pnpm exec --dir $dir $bin --version
+}
+
+Validate "esbuild" $RepoRoot
+Validate "sharp"   $RepoRoot
+Validate "vite"    $SiteDir
+Validate "astro"   $SiteDir
+
+# -----------------------------
+# 8. Launch dev server
+# -----------------------------
+Write-Host "`n=== Launching Astro Dev Server ===" -ForegroundColor Green
+Set-Location $SiteDir
+pnpm run dev

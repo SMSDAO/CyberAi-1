@@ -1,39 +1,110 @@
-name: CyberAi Terminal Agent
-description: Autonomous engineering agent for the CyberAi ecosystem.
+name: CyberAi Terminal Mobile Agent
+version: 1.1.0
+description: Autonomous engineering agent for the SolanaRemix CyberAi ecosystem with operator-grade governance
 
-app:
-  slug: terminal-mobile
-  events:
-    - pull_request
-    - issue_comment
-    - pull_request_review
-    - push
+governance:
+  mode: operator_grade
+  principles:
+    - additive_only
+    - no_silent_refactors
+    - no_architecture_drift
+    - explain_changes
+    - respect_repo_invariants
 
-runtime:
-  type: local
-  url: "REPLACE_WITH_TUNNEL_URL"
+  protections:
+    business_logic:
+      modify: false
+      note: 'Do not change core business logic unless explicitly requested.'
+    deletions:
+      allow: false
+      note: 'No file or logic deletions by default.'
+    migrations:
+      allow: false
+      note: 'Schema or data migrations require explicit human approval.'
+
+triggers:
+  - terminal_mobile
+  - cyberai_terminal
+  - smartcontractaudit
+  - smartbrain
+  - gitantivirus
+  - node_audit
+  - conflicts_resolver
 
 commands:
-  terminal-help:
-    description: Show all commands
-    triggers: ["/terminal help"]
-    steps:
-      - run: echo 'CyberAi Terminal Agent Online'
+  - name: help
+    description: Display available CyberAi Terminal commands
+    usage: /terminal help
 
-  terminal-status:
-    description: Repo status
-    triggers: ["/terminal status"]
-    steps:
-      - run: git status
+  - name: status
+    description: Check the status of CyberAi services and integrations
+    usage: /terminal status
 
-ecosystem:
+  - name: scan
+    description: Perform security and code quality scan
+    usage: /terminal scan
+
+  - name: audit
+    description: Run comprehensive audit on the codebase
+    usage: /terminal audit
+
+  - name: fix
+    description: Automatically fix detected issues (additive-only, no business logic changes)
+    usage: /terminal fix
+
+  - name: deploy
+    description: Deploy to production environment (requires explicit confirmation)
+    usage: /terminal deploy
+
+  - name: smartcontractaudit
+    description: Audit smart contracts for vulnerabilities
+    usage: /terminal smartcontractaudit
+
+  - name: smartbrain
+    description: AI-powered code analysis and suggestions
+    usage: /terminal smartbrain
+
+  - name: gitantivirus
+    description: Scan for malicious code and vulnerabilities
+    usage: /terminal gitantivirus
+
+  - name: node_audit
+    description: Audit Node.js dependencies and packages
+    usage: /terminal node_audit
+
+  - name: conflicts_resolver
+    description: Automatically resolve merge conflicts with minimal, additive changes
+    usage: /terminal conflicts_resolver
+
+  - name: cyberai
+    description: Run full CyberAi ecosystem analysis
+    usage: /terminal cyberai
+
+webhooks:
   enabled: true
+  events:
+    - push
+    - pull_request
+    - issues
+    - pull_request_review
+    - workflow_run
+
+integrations:
+  github_app: true
   repos:
     - SolanaRemix/CyberAi
     - SolanaRemix/SmartContractAudit
     - SolanaRemix/SmartBrain
     - SolanaRemix/Terminal
     - SolanaRemix/GitAntivirus
-    - SolanaRemix/NodeAudit
-  exclude_archived: true
-  bootstrap_branch: "cyberai/pipeline-bootstrap"
+    - SolanaRemix/Node-Audit
+    - SolanaRemix/ConflictsResolver
+
+automation:
+  auto_scan: true
+  auto_fix: true
+  auto_deploy: false
+  notification_channels:
+    - slack
+    - email
+    - github

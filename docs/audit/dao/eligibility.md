@@ -1,5 +1,3 @@
-<<<<<<< HEAD
-<<<<<<< HEAD
 # Contributor Eligibility
 
 ## Overview
@@ -17,6 +15,7 @@ To be eligible for DAO participation, contributors must meet at least one of the
 **Requirement**: At least one merged pull request
 
 Includes:
+
 - Feature implementations
 - Bug fixes
 - Performance improvements
@@ -25,6 +24,7 @@ Includes:
 - CI/CD improvements
 
 **Minimum Threshold**:
+
 - At least 1 merged PR by snapshot date
 - PR must add meaningful value (no spam PRs)
 - PR must follow contribution guidelines
@@ -34,6 +34,7 @@ Includes:
 **Requirement**: Significant documentation improvements
 
 Includes:
+
 - New documentation pages
 - Major doc updates or fixes
 - Tutorial creation
@@ -42,6 +43,7 @@ Includes:
 - Diagram and visual aids
 
 **Minimum Threshold**:
+
 - At least 1 merged documentation PR
 - Minimum 100 lines of quality documentation
 - Clear improvement to user/developer experience
@@ -51,6 +53,7 @@ Includes:
 **Requirement**: Reported valid security vulnerability
 
 Includes:
+
 - Security vulnerabilities
 - Logic bugs with security implications
 - Cryptographic weaknesses
@@ -58,6 +61,7 @@ Includes:
 - Supply chain vulnerabilities
 
 **Minimum Threshold**:
+
 - At least 1 accepted security report
 - Followed responsible disclosure process
 - Vulnerability confirmed by security team
@@ -70,12 +74,14 @@ Includes:
 **Requirement**: High-quality issue reports
 
 Includes:
+
 - Bug reports with reproduction steps
 - Feature requests with clear use cases
 - Issues that lead to improvements
 - Well-researched problem descriptions
 
 **Minimum Threshold**:
+
 - At least 3 quality issues created
 - Issues must be accepted (not closed as invalid/duplicate)
 - Clear value to project
@@ -86,6 +92,7 @@ Includes:
 **Requirement**: Meaningful code review participation
 
 Includes:
+
 - PR reviews with constructive feedback
 - Bug identification in PRs
 - Architecture and design feedback
@@ -93,6 +100,7 @@ Includes:
 - Testing recommendations
 
 **Minimum Threshold**:
+
 - At least 5 meaningful PR reviews
 - Reviews must add value (not just "+1" or "LGTM")
 - Demonstrate understanding of codebase
@@ -103,6 +111,7 @@ Includes:
 **Requirement**: Active community assistance
 
 Includes:
+
 - Answering questions in Discussions
 - Helping users troubleshoot issues
 - Creating educational content
@@ -110,6 +119,7 @@ Includes:
 - Organizing community events
 
 **Minimum Threshold**:
+
 - Sustained activity over at least 30 days
 - Helpful and respectful interactions
 - At least 10 meaningful community interactions
@@ -173,6 +183,7 @@ Appeals must be submitted within 7 days of final list publication.
 **Frequency**: Quarterly (every 3 months)
 
 **Typical Schedule**:
+
 - Q1: March 31
 - Q2: June 30
 - Q3: September 30
@@ -183,6 +194,7 @@ Appeals must be submitted within 7 days of final list publication.
 ### Eligibility Window
 
 Contributions must be:
+
 - Made before the snapshot date/time
 - Merged/accepted before the snapshot
 - Verified and validated
@@ -199,6 +211,7 @@ Contributions must be:
 ### Maintainers
 
 Core maintainers receive:
+
 - Base allocation for contributions
 - Maintenance bonus (additional allocation)
 - Long-term commitment bonus
@@ -208,6 +221,7 @@ Core maintainers receive:
 ### Security Researchers
 
 Significant security findings may receive:
+
 - Bonus allocation based on severity
 - Critical: 3x multiplier
 - High: 2x multiplier
@@ -218,6 +232,7 @@ Significant security findings may receive:
 ### First-Time Contributors
 
 First merged contribution receives:
+
 - Welcome bonus (1.2x multiplier)
 - Encourages new contributors
 - One-time bonus only
@@ -225,6 +240,7 @@ First merged contribution receives:
 ### Sustained Contributors
 
 Contributors active for multiple quarters:
+
 - Loyalty bonus (1.1x per consecutive quarter, max 1.5x)
 - Encourages long-term engagement
 
@@ -233,6 +249,7 @@ Contributors active for multiple quarters:
 ### Scenario 1: New Code Contributor
 
 **Profile**:
+
 - 2 merged PRs (feature + bugfix)
 - 1 code review
 - Joined this quarter
@@ -244,6 +261,7 @@ Contributors active for multiple quarters:
 ### Scenario 2: Documentation Expert
 
 **Profile**:
+
 - 5 documentation PRs
 - Created 2 tutorials
 - 300+ lines of documentation
@@ -255,6 +273,7 @@ Contributors active for multiple quarters:
 ### Scenario 3: Security Researcher
 
 **Profile**:
+
 - Reported 1 High severity vulnerability
 - Followed responsible disclosure
 - Vulnerability confirmed and fixed
@@ -266,6 +285,7 @@ Contributors active for multiple quarters:
 ### Scenario 4: Community Helper
 
 **Profile**:
+
 - Answered 20+ questions
 - Active for 45 days
 - Positive community feedback
@@ -277,6 +297,7 @@ Contributors active for multiple quarters:
 ### Scenario 5: Issue-Only User
 
 **Profile**:
+
 - Created 10 issues
 - 2 were duplicates
 - 8 were valid and accepted
@@ -288,6 +309,7 @@ Contributors active for multiple quarters:
 ### Scenario 6: Spam Contributor
 
 **Profile**:
+
 - Submitted 20 PRs with trivial changes
 - Most were typo fixes or whitespace
 - No meaningful value added
@@ -318,8 +340,8 @@ This eligibility criteria may be updated:
 
 **Effective Date**: 2026-01-01
 
-**Next Review**: 2026-04-01
-=======
+# **Next Review**: 2026-04-01
+
 # Contributor Eligibility & Criteria
 
 ## Overview
@@ -355,31 +377,39 @@ To be eligible for token rewards, contributors must:
 ### Advanced Eligibility Tiers
 
 #### Tier 1: Contributor (Entry)
+
 **Requirements**:
+
 - 1-5 merged PRs
 - Active for 1+ month
 - Positive community feedback
 
 **Rewards**:
+
 - Base token allocation
 - Voting rights
 - Community recognition
 
 #### Tier 2: Regular Contributor
+
 **Requirements**:
+
 - 6-20 merged PRs
 - Active for 3+ months
 - Quality contributions (no spam)
 - Helped onboard new contributors
 
 **Rewards**:
+
 - 2x base allocation
 - Enhanced voting weight
 - Contributor badge
 - Early feature access
 
 #### Tier 3: Core Contributor
+
 **Requirements**:
+
 - 21+ merged PRs
 - Active for 6+ months
 - Significant impact (features, fixes, docs)
@@ -387,13 +417,16 @@ To be eligible for token rewards, contributors must:
 - Code review participation
 
 **Rewards**:
+
 - 3x base allocation
 - Maintainer consideration
 - Speaking opportunities
 - Strategic input
 
 #### Tier 4: Maintainer
+
 **Requirements**:
+
 - Appointed by existing maintainers
 - Sustained high-quality contributions
 - Technical expertise
@@ -401,6 +434,7 @@ To be eligible for token rewards, contributors must:
 - Governance participation
 
 **Rewards**:
+
 - 5x base allocation
 - Write access
 - Release authority
@@ -411,6 +445,7 @@ To be eligible for token rewards, contributors must:
 ### Code Contributions
 
 **Eligible**:
+
 - New features
 - Bug fixes
 - Performance improvements
@@ -419,6 +454,7 @@ To be eligible for token rewards, contributors must:
 - CI/CD improvements
 
 **Scoring**:
+
 - Small PR: 1 point
 - Medium PR: 3 points
 - Large PR: 5 points
@@ -427,6 +463,7 @@ To be eligible for token rewards, contributors must:
 ### Documentation
 
 **Eligible**:
+
 - Technical documentation
 - User guides
 - Code comments (meaningful)
@@ -435,6 +472,7 @@ To be eligible for token rewards, contributors must:
 - Translation
 
 **Scoring**:
+
 - Minor update: 1 point
 - Major documentation: 3 points
 - Tutorial/guide: 5 points
@@ -442,6 +480,7 @@ To be eligible for token rewards, contributors must:
 ### Community Support
 
 **Eligible**:
+
 - Answering questions (GitHub/Discord)
 - Triaging issues
 - Reproducing bugs
@@ -449,6 +488,7 @@ To be eligible for token rewards, contributors must:
 - Community moderation
 
 **Scoring**:
+
 - Helpful response: 0.5 points
 - Issue triage: 1 point
 - Onboarding help: 2 points
@@ -456,12 +496,14 @@ To be eligible for token rewards, contributors must:
 ### Security
 
 **Eligible**:
+
 - Vulnerability reports
 - Security audits
 - Security documentation
 - Patch development
 
 **Scoring**:
+
 - Low severity: 5 points
 - Medium severity: 10 points
 - High severity: 20 points
@@ -470,12 +512,14 @@ To be eligible for token rewards, contributors must:
 ### Design & UX
 
 **Eligible**:
+
 - UI/UX improvements
 - Design assets
 - User research
 - Usability testing
 
 **Scoring**:
+
 - Minor improvement: 1 point
 - Major redesign: 5 points
 - User research: 3 points
@@ -526,6 +570,7 @@ Maintainer work (reviews, governance, community management) is tracked separatel
 ### External Contributors
 
 Contributors from partner organizations:
+
 - Eligible for same rewards
 - Must meet same criteria
 - No special advantages
@@ -533,6 +578,7 @@ Contributors from partner organizations:
 ### Retroactive Eligibility
 
 Past contributors (before DAO launch):
+
 - Retroactive snapshot taken
 - Historical contributions scored
 - Initial airdrop allocation
@@ -542,12 +588,14 @@ Past contributors (before DAO launch):
 To align long-term incentives:
 
 **Contributor Tokens**:
+
 - 25% immediate
 - 75% vested over 12 months
 - Linear vesting
 - Transferable after vest
 
 **Maintainer Tokens**:
+
 - 10% immediate
 - 90% vested over 24 months
 - Linear vesting
@@ -572,6 +620,7 @@ If you believe your eligibility assessment is incorrect:
 ## Privacy
 
 Contribution data used for eligibility:
+
 - GitHub public activity only
 - No private data collected
 - Anonymized aggregations
@@ -580,6 +629,7 @@ Contribution data used for eligibility:
 ## Updates
 
 Eligibility criteria may be updated:
+
 - Through DAO governance process
 - With 30-day notice
 - Retroactive changes require supermajority
@@ -593,8 +643,9 @@ Eligibility criteria may be updated:
 ---
 
 Last updated: 2026-01-01
->>>>>>> origin/pr9
-=======
+
+> > > > > > > # origin/pr9
+
 # DAO Eligibility Criteria
 
 ## Overview
@@ -641,11 +692,13 @@ Contributors who have:
 ### Code Contributors
 
 **Minimum Requirements:**
+
 - At least 1 merged pull request
 - Contributions signed with DCO (`git commit -s`)
 - Code meets quality standards (passes CI/CD)
 
 **Weighted by:**
+
 - Lines of code (quality over quantity)
 - Complexity of contributions
 - Impact on project (features vs. typos)
@@ -654,11 +707,13 @@ Contributors who have:
 ### Reviewers
 
 **Minimum Requirements:**
+
 - At least 3 meaningful code reviews
 - Reviews include constructive feedback
 - Not just "LGTM" comments
 
 **Weighted by:**
+
 - Number of reviews
 - Quality and depth of feedback
 - Reviews leading to improvements
@@ -666,11 +721,13 @@ Contributors who have:
 ### Community Members
 
 **Minimum Requirements:**
+
 - Active participation in issues or discussions
 - Helpful responses to community questions
 - Positive community interaction
 
 **Weighted by:**
+
 - Number of helpful interactions
 - Quality of contributions
 - Community sentiment
@@ -678,11 +735,13 @@ Contributors who have:
 ### Security Researchers
 
 **Minimum Requirements:**
+
 - At least 1 valid security report
 - Followed responsible disclosure process
 - Report led to a fix
 
 **Weighted by:**
+
 - Severity of issues found
 - Quality of reports
 - Number of valid reports
@@ -767,6 +826,7 @@ Contributors who have:
 ### Early Contributors
 
 **Bonus for:**
+
 - Contributions in first 6 months of project
 - Founding team members
 - Initial community builders
@@ -774,6 +834,7 @@ Contributors who have:
 ### Consistent Contributors
 
 **Bonus for:**
+
 - Contributions spanning 6+ months
 - Regular activity (monthly contributions)
 - Long-term commitment
@@ -781,6 +842,7 @@ Contributors who have:
 ### High-Impact Contributors
 
 **Bonus for:**
+
 - Critical security fixes
 - Major features or improvements
 - Significant documentation contributions
@@ -789,6 +851,7 @@ Contributors who have:
 ### Underrepresented Groups
 
 **Consideration for:**
+
 - First-time open source contributors
 - Contributors from underrepresented regions
 - Accessibility improvements
@@ -797,6 +860,7 @@ Contributors who have:
 ## Calculation Example
 
 **Sample Contributor Profile:**
+
 - 5 merged PRs (100 points)
 - 10 code reviews (50 points)
 - 20 helpful issue comments (20 points)
@@ -839,6 +903,7 @@ This eligibility criteria may be updated with:
 - Regulatory requirements
 
 Changes announced with:
+
 - Minimum 30 days notice
 - GitHub discussions for feedback
 - Changelog in this document
@@ -854,4 +919,5 @@ Changes announced with:
 **Last Updated**: 2026-01-01  
 **Version**: 1.0  
 **Next Review**: 2026-06-01
->>>>>>> origin/pr10
+
+> > > > > > > origin/pr10
