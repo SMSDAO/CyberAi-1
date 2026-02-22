@@ -11,7 +11,7 @@ Welcome to **CyberAi** — an AI-powered smart contract security and orchestrati
 Before you begin, ensure you have:
 
 - **Git** 2.x or higher
-- **Node.js** 16.x or higher
+- **Node.js** 24.x or higher
 - **pnpm** 8.x or higher (or npm/yarn)
 - **Bash** 4.x or higher
 - **Operating System**: Linux, macOS, or WSL2 on Windows

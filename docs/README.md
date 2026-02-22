@@ -71,7 +71,7 @@ Welcome to the comprehensive documentation for **CyberAi** (formerly CuberAi) - 
 
 ### Prerequisites
 - **Operating System**: Linux, macOS, or WSL2 on Windows
-- **Node.js**: 16.x or higher
+- **Node.js**: 24.x or higher
 - **pnpm**: 8.x or higher (or npm)
 - **Bash**: 4.x or higher
 - **Git**: 2.x or higher
